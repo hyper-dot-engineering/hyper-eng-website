@@ -5,40 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hyper Engineering | Agentic Engineering & Consulting</title>
     <meta name="description" content="Agentic Engineering & Consulting. Strategy to Execution. We build AI agents that work.">
-    <link rel="stylesheet" href="styles.css">
+    <meta property="og:title" content="Hyper Engineering">
+    <meta property="og:description" content="Agentic Engineering & Consulting. Strategy to Execution.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hyper.engineering">
     <link rel="icon" type="image/png" href="assets/main-s.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Baloo 2', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #999;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(59,130,246,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(59,130,246,0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 700px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .dot {
+            color: #3b82f6;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: #666;
+            margin-top: -0.25rem;
+            margin-bottom: 2rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        strong {
+            color: #fff;
+            font-weight: 400;
+        }
+
+        a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        .label {
+            color: #666;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #222;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .tagline {
+                font-size: 1rem;
+            }
+            .logo {
+                width: 60px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <img src="assets/main.png" alt="Hyper Engineering" class="logo">
-        </header>
-        
-        <main>
-            <h1>Agentic Engineering</h1>
-            <p class="tagline">Strategy to Execution</p>
-            
-            <div class="pitch">
-                <p>We build AI agents that actually work — not demos, not prototypes, but systems that ship and run in production.</p>
-            </div>
+        <img src="assets/main-s.png" alt="Hyper" class="logo">
+        <h1>hyper<span class="dot">.</span>engineering</h1>
+        <p class="tagline">Agentic Engineering & Consulting</p>
 
-            <section class="services">
-                <div class="service">
-                    <h2>Build</h2>
-                    <p>Custom AI agents and agentic systems. Embedded with your team or fully managed. Working software in days, not quarters.</p>
-                </div>
-                <div class="service">
-                    <h2>Train</h2>
-                    <p>Hands-on workshops for engineering teams. Learn by building real projects, not toy examples.</p>
-                </div>
-            </section>
+        <p><strong>AI agents are the new leverage.</strong> Not chatbots. Not copilots. Autonomous systems that plan, execute, and deliver — handling entire workflows while you focus on what matters.</p>
 
-            <a href="mailto:hello@hyper.engineering" class="cta">Let's talk →</a>
-        </main>
+        <p><strong>The gap is growing.</strong> Some teams have cracked it: agents writing code, managing infrastructure, handling ops. Others are still copy-pasting into chat windows. Same tools, wildly different results.</p>
 
-        <footer>
-            <p>© 2026 Hyper Engineering</p>
-        </footer>
+        <p><strong>We bridge strategy to execution.</strong> Most consultants recommend. Most dev shops build to spec. We do both — figure out what agentic AI can do for you, then ship it.</p>
+
+        <p class="label">How we help</p>
+
+        <p><strong>Build.</strong> Custom AI agents and agentic systems. Embedded with your team or fully managed. Working software in days, not quarters.</p>
+
+        <p><strong>Train.</strong> Hands-on workshops for engineering teams. Real projects, not toy demos. Your engineers leave knowing how to build with agents, not just use them.</p>
+
+        <p>Let's talk: <a href="mailto:hello@hyper.engineering">hello@hyper.engineering</a></p>
+
+        <footer><a href="https://hyper.engineering">&copy; 2026 Hyper Engineering</a></footer>
     </div>
 </body>
 </html>
