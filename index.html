@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hyper Engineering | AI Native Engineering</title>
-    <meta name="description" content="AI Native Engineering. Strategy to Execution. We build AI agents that work.">
+    <meta name="description" content="AI Native Engineering. We build AI agents. Sometimes with you.">
     <meta property="og:title" content="Hyper Engineering">
-    <meta property="og:description" content="AI Native Engineering. Strategy to Execution.">
+    <meta property="og:description" content="AI Native Engineering. We build AI agents. Sometimes with you.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://hyper.engineering">
     <link rel="icon" type="image/png" href="assets/main-s.png">
@@ -31,6 +31,7 @@
             padding: 2rem;
             line-height: 1.6;
             position: relative;
+            overflow: hidden;
         }
 
         body::before {
@@ -38,9 +39,16 @@
             position: fixed;
             inset: 0;
             background: 
-                radial-gradient(ellipse at 20% 20%, rgba(59,130,246,0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(59,130,246,0.06) 0%, transparent 50%);
+                radial-gradient(ellipse at 30% 20%, rgba(59,130,246,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(139,92,246,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(59,130,246,0.05) 0%, transparent 70%);
             pointer-events: none;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         body::after {
@@ -50,22 +58,23 @@
             background-image: 
                 linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-size: 60px 60px;
             pointer-events: none;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 600px;
             position: relative;
             z-index: 1;
             text-align: center;
         }
 
         .logo {
-            width: 200px;
+            width: 300px;
             height: auto;
-            margin-bottom: 1.5rem;
-            opacity: 0.9;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            filter: drop-shadow(0 0 40px rgba(59,130,246,0.2));
         }
 
         h1 {
@@ -81,55 +90,55 @@
         }
 
         .tagline {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             color: #666;
             margin-top: -0.25rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
         }
 
-        p {
-            margin-bottom: 1.5rem;
-        }
-
-        strong {
-            color: #fff;
-            font-weight: 400;
+        .pitch {
+            font-size: 1.35rem;
+            color: #ccc;
+            margin-bottom: 2.5rem;
+            line-height: 1.5;
         }
 
         a {
             color: #3b82f6;
             text-decoration: none;
+            transition: color 0.2s ease;
         }
 
         a:hover {
             color: #fff;
         }
 
-        .label {
-            color: #666;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
+        .cta {
+            font-size: 1.1rem;
         }
 
         footer {
-            margin-top: 2rem;
+            margin-top: 4rem;
             padding-top: 1.5rem;
-            border-top: 1px solid #222;
-            color: #666;
+            border-top: 1px solid #1a1a1a;
+            color: #444;
+            font-size: 0.875rem;
         }
 
         @media (max-width: 600px) {
             h1 {
-                font-size: 2rem;
+                font-size: 1.75rem;
             }
             .tagline {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
             .logo {
-                width: 140px;
+                width: 200px;
+            }
+            .pitch {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -140,21 +149,11 @@
         <h1>hyper<span class="dot">.</span>engineering</h1>
         <p class="tagline">AI Native Engineering</p>
 
-        <p><strong>The game is changing—fast.</strong> AI isn't just speeding up coding. It's compressing the entire development lifecycle. Teams that lean in are <a href="https://www.bain.com/insights/from-pilots-to-payoff-generative-ai-in-software-development-technology-report-2025/" target="_blank" rel="noopener">shipping in days what used to take months</a>.</p>
+        <p class="pitch">We build AI agents. Sometimes with you.</p>
 
-        <p><strong>AI agents are the new leverage.</strong> Not chatbots. Not copilots. Autonomous systems that plan, execute, and deliver. One person with agents can deliver what used to take a whole squad — <a href="https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/unlocking-the-value-of-ai-in-software-development" target="_blank" rel="noopener">force multipliers</a>, not just tools.</p>
+        <p class="cta"><a href="mailto:hello@hyper.engineering">hello@hyper.engineering</a></p>
 
-        <p><strong>The gap is growing.</strong> Some teams have found something that <a href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" target="_blank" rel="noopener">feels like a cheat code</a>. Others are still copy-pasting into chat windows. Same tools, wildly different results.</p>
-
-        <p class="label">How we help</p>
-
-        <p><strong>Build.</strong> AI agents, agentic systems, or existing systems that need an AI-powered boost. Embedded with your team or fully managed. Working software in days, not quarters.</p>
-
-        <p><strong>Train.</strong> Hands-on workshops for engineering teams. Real projects, not toy demos. Your engineers leave knowing how to build with agents, not just use them.</p>
-
-        <p>Let's talk: <a href="mailto:hello@hyper.engineering">hello@hyper.engineering</a></p>
-
-        <footer><a href="https://hyper.engineering">&copy; 2026 Hyper Engineering</a></footer>
+        <footer>&copy; 2026 Hyper Engineering</footer>
     </div>
 </body>
 </html>
