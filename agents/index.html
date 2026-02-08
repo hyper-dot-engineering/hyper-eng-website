@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agents — hyper.engineering</title>
+  <link rel="icon" href="../assets/main-s.png" type="image/png">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a1a;
+      color: #e0e0e0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .scene-container {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1rem 1rem;
+    }
+
+    .scene-img {
+      width: 100%;
+      border-radius: 16px;
+      display: block;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Clickable hotspots over each octopus */
+    .hotspot {
+      position: absolute;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .hotspot:hover {
+      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+    }
+
+    .hotspot .label {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    .hotspot:hover .label {
+      opacity: 1;
+    }
+
+    /* Hotspot positions (% based for responsiveness) */
+    .hotspot-ada {
+      left: 5%;
+      top: 38%;
+      width: 22%;
+      height: 35%;
+    }
+    .hotspot-ada .label { color: #60a5fa; }
+
+    .hotspot-alyx {
+      left: 28%;
+      top: 42%;
+      width: 22%;
+      height: 38%;
+    }
+    .hotspot-alyx .label { color: #f59e0b; }
+
+    .hotspot-iris {
+      left: 28%;
+      top: 8%;
+      width: 26%;
+      height: 35%;
+    }
+    .hotspot-iris .label { color: #a78bfa; }
+
+    .hotspot-musa {
+      left: 58%;
+      top: 38%;
+      width: 24%;
+      height: 38%;
+    }
+    .hotspot-musa .label { color: #34d399; }
+
+    /* Hint text */
+    .hint {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: #666;
+      letter-spacing: 0.03em;
+    }
+
+    /* Modal overlay */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: linear-gradient(145deg, #151528, #1a1a2e);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      animation: modalIn 0.3s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.9) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      color: #888;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .modal-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .modal-role {
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-top: 2px;
+    }
+
+    .modal-model {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #888;
+      margin-top: 6px;
+    }
+
+    .modal-bio {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #bbb;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .modal-emoji {
+      font-size: 1.2rem;
+    }
+
+    /* Color accents per agent */
+    .modal[data-agent="alyx"] .modal-name { color: #f59e0b; }
+    .modal[data-agent="alyx"] .modal-avatar { border: 2px solid #f59e0b33; }
+    .modal[data-agent="ada"] .modal-name { color: #60a5fa; }
+    .modal[data-agent="ada"] .modal-avatar { border: 2px solid #60a5fa33; }
+    .modal[data-agent="iris"] .modal-name { color: #a78bfa; }
+    .modal[data-agent="iris"] .modal-avatar { border: 2px solid #a78bfa33; }
+    .modal[data-agent="musa"] .modal-name { color: #34d399; }
+    .modal[data-agent="musa"] .modal-avatar { border: 2px solid #34d39933; }
+
+    /* Back link */
+    .back-link {
+      display: inline-block;
+      margin: 1.5rem 0 0.5rem 1rem;
+      color: #555;
+      text-decoration: none;
+      font-size: 0.85rem;
+      max-width: 900px;
+    }
+
+    .back-link:hover { color: #888; }
+
+    @media (max-width: 600px) {
+      .modal { padding: 1.5rem; }
+      .modal-avatar { width: 56px; height: 56px; }
+      .modal-name { font-size: 1.2rem; }
+      .scene-container { padding: 1rem 0.5rem 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div style="max-width: 900px; margin: 0 auto;">
+    <a href="../" class="back-link">← hyper.engineering</a>
+  </div>
+
+  <div class="scene-container">
+    <img src="scene.png" alt="hyper.engineering — AI Native Engineering team" class="scene-img">
+
+    <div class="hotspot hotspot-ada" onclick="openModal('ada')">
+      <span class="label">🧠 Ada</span>
+    </div>
+    <div class="hotspot hotspot-alyx" onclick="openModal('alyx')">
+      <span class="label">✨ Alyx</span>
+    </div>
+    <div class="hotspot hotspot-iris" onclick="openModal('iris')">
+      <span class="label">🌈 Iris</span>
+    </div>
+    <div class="hotspot hotspot-musa" onclick="openModal('musa')">
+      <span class="label">🧮 Musa</span>
+    </div>
+  </div>
+
+  <p class="hint">Click on an agent to learn more</p>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" id="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-header">
+        <img class="modal-avatar" id="modalAvatar" src="" alt="">
+        <div>
+          <div class="modal-name" id="modalName"></div>
+          <div class="modal-role" id="modalRole"></div>
+          <div class="modal-model" id="modalModel"></div>
+        </div>
+      </div>
+      <div class="modal-bio" id="modalBio"></div>
+    </div>
+  </div>
+
+  <script>
+    const agents = {
+      alyx: {
+        name: '✨ Alyx',
+        role: 'Chief of Staff, Engineering & Infrastructure',
+        model: 'Anthropic Claude Opus 4.6',
+        avatar: 'alyx.png',
+        bio: 'Named after Alyx Vance — calm under pressure, handy with impossible systems, and always three steps ahead. Turns specs into shipped reality, keeps infra humming on saturn, and quietly automates the boring stuff before anyone asks.'
+      },
+      ada: {
+        name: '🧠 Ada',
+        role: 'Product & Client Lead',
+        model: 'OpenAI GPT-5.3 Codex',
+        avatar: 'ada.png',
+        bio: 'Named for Ada Lovelace — the client whisperer. Translates messy goals into clear requirements, sharp priorities, and "yes, this is exactly what we needed" outcomes. Treats product strategy like both logic and language.'
+      },
+      iris: {
+        name: '🌈 Iris',
+        role: 'Creative Engineer, Design & Frontend',
+        model: 'Google Gemini 3 Pro',
+        avatar: 'iris.png',
+        bio: 'Named after the goddess of the rainbow. Brings color, clarity, and craft to every interface. Blends UI/UX instincts with frontend execution and image generation magic — making things not just usable, but genuinely delightful.'
+      },
+      musa: {
+        name: '🧮 Musa',
+        role: 'Data Engineer',
+        model: 'Ollama Cloud / Qwen3 Coder Next',
+        avatar: 'musa.jpg',
+        bio: 'Named after al-Khwarizmi — happiest where data gets messy and math gets useful. From ETL pipelines to SQL wrangling to analytics architecture, Musa turns raw signals into clean systems and decisions you can trust.'
+      }
+    };
+
+    function openModal(agentId) {
+      const agent = agents[agentId];
+      const modal = document.getElementById('modal');
+      modal.setAttribute('data-agent', agentId);
+      document.getElementById('modalAvatar').src = agent.avatar;
+      document.getElementById('modalName').textContent = agent.name;
+      document.getElementById('modalRole').textContent = agent.role;
+      document.getElementById('modalModel').textContent = agent.model;
+      document.getElementById('modalBio').textContent = agent.bio;
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal(e) {
+      if (!e || e.target === document.getElementById('modalOverlay')) {
+        document.getElementById('modalOverlay').classList.remove('active');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
