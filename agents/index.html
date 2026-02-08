@@ -9,128 +9,198 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #0a0a1a;
+      background: #050510;
       color: #e0e0e0;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    .scene-container {
+    /* Starfield background */
+    .starfield {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 20% 50%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1.5px 1.5px at 30% 10%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 40% 70%, rgba(200,220,255,0.7), transparent),
+        radial-gradient(1px 1px at 50% 30%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1.5px 1.5px at 60% 80%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 70% 15%, rgba(200,200,255,0.6), transparent),
+        radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 90% 40%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1.5px 1.5px at 15% 85%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 25% 35%, rgba(200,220,255,0.6), transparent),
+        radial-gradient(1px 1px at 35% 55%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 45% 90%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1.5px 1.5px at 55% 5%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 65% 45%, rgba(200,200,255,0.5), transparent),
+        radial-gradient(1px 1px at 75% 75%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 85% 25%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 95% 65%, rgba(200,220,255,0.5), transparent),
+        radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1.5px 1.5px at 48% 48%, rgba(255,255,255,0.4), transparent);
+      background-size: 300px 300px;
+      animation: drift 60s linear infinite;
+    }
+
+    .starfield::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(60, 20, 120, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, rgba(20, 40, 100, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(80, 20, 80, 0.1) 0%, transparent 60%);
+    }
+
+    @keyframes drift {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-300px, -300px); }
+    }
+
+    .content {
       position: relative;
-      max-width: 900px;
+      z-index: 1;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin: 1.5rem 0 0 2rem;
+      color: #555;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .back-link:hover { color: #888; }
+
+    .ship-container {
+      position: relative;
+      max-width: 750px;
       margin: 0 auto;
-      padding: 2rem 1rem 1rem;
+      padding: 1rem;
     }
 
-    .scene-img {
+    .ship-img {
       width: 100%;
-      border-radius: 16px;
       display: block;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+      filter: drop-shadow(0 20px 60px rgba(100, 50, 200, 0.2))
+              drop-shadow(0 5px 20px rgba(0, 0, 0, 0.5));
+      animation: float 6s ease-in-out infinite;
     }
 
-    /* Clickable hotspots over each octopus */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* Clickable hotspots */
     .hotspot {
       position: absolute;
       border-radius: 50%;
       cursor: pointer;
       transition: all 0.3s ease;
       border: 2px solid transparent;
+      z-index: 2;
     }
 
     .hotspot:hover {
-      border-color: rgba(255, 255, 255, 0.4);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
     }
 
     .hotspot .label {
       position: absolute;
-      bottom: -28px;
+      bottom: -26px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 600;
       letter-spacing: 0.05em;
       white-space: nowrap;
       opacity: 0;
       transition: opacity 0.3s ease;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9);
     }
 
-    .hotspot:hover .label {
-      opacity: 1;
-    }
+    .hotspot:hover .label { opacity: 1; }
 
-    /* Hotspot positions (% based for responsiveness) */
+    /* Agent positions in the top-down dome view */
     .hotspot-ada {
-      left: 3%;
-      top: 38%;
-      width: 28%;
-      height: 48%;
+      left: 8%;
+      top: 22%;
+      width: 24%;
+      height: 40%;
     }
     .hotspot-ada .label { color: #60a5fa; }
 
     .hotspot-alyx {
-      left: 28%;
-      top: 48%;
-      width: 38%;
-      height: 46%;
+      left: 26%;
+      top: 32%;
+      width: 28%;
+      height: 42%;
     }
     .hotspot-alyx .label { color: #f59e0b; }
 
     .hotspot-iris {
-      left: 22%;
-      top: 15%;
-      width: 46%;
-      height: 38%;
+      left: 30%;
+      top: 8%;
+      width: 30%;
+      height: 30%;
     }
     .hotspot-iris .label { color: #a78bfa; }
 
     .hotspot-musa {
-      left: 64%;
-      top: 40%;
-      width: 32%;
-      height: 48%;
+      left: 54%;
+      top: 22%;
+      width: 26%;
+      height: 40%;
     }
     .hotspot-musa .label { color: #34d399; }
 
-    /* Hint text */
+    .subtitle {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #556;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+
     .hint {
       text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: #666;
+      padding: 0.8rem;
+      font-size: 0.8rem;
+      color: #445;
       letter-spacing: 0.03em;
     }
 
-    /* Modal overlay */
+    /* Modal */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(10px);
       z-index: 100;
       justify-content: center;
       align-items: center;
       padding: 1rem;
     }
 
-    .modal-overlay.active {
-      display: flex;
-    }
+    .modal-overlay.active { display: flex; }
 
     .modal {
-      background: linear-gradient(145deg, #151528, #1a1a2e);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(145deg, #111125, #161630);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 20px;
       padding: 2.5rem;
       max-width: 420px;
       width: 100%;
       position: relative;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 80px rgba(80, 40, 160, 0.1);
       animation: modalIn 0.3s ease;
     }
 
@@ -143,24 +213,20 @@
       position: absolute;
       top: 1rem;
       right: 1rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 50%;
       width: 32px;
       height: 32px;
       cursor: pointer;
-      color: #888;
+      color: #666;
       font-size: 1.1rem;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.2s;
     }
-
-    .modal-close:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
+    .modal-close:hover { background: rgba(255,255,255,0.08); color: #fff; }
 
     .modal-header {
       display: flex;
@@ -174,45 +240,32 @@
       height: 72px;
       border-radius: 16px;
       object-fit: cover;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
 
-    .modal-name {
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
-
-    .modal-role {
-      font-size: 0.9rem;
-      color: #aaa;
-      margin-top: 2px;
-    }
+    .modal-name { font-size: 1.5rem; font-weight: 700; }
+    .modal-role { font-size: 0.9rem; color: #999; margin-top: 2px; }
 
     .modal-model {
       display: inline-block;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       padding: 3px 10px;
       border-radius: 20px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #888;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #777;
       margin-top: 6px;
     }
 
     .modal-bio {
       font-size: 0.95rem;
       line-height: 1.6;
-      color: #bbb;
+      color: #aaa;
       margin-top: 1rem;
       padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-top: 1px solid rgba(255,255,255,0.05);
     }
 
-    .modal-emoji {
-      font-size: 1.2rem;
-    }
-
-    /* Color accents per agent */
     .modal[data-agent="alyx"] .modal-name { color: #f59e0b; }
     .modal[data-agent="alyx"] .modal-avatar { border: 2px solid #f59e0b33; }
     .modal[data-agent="ada"] .modal-name { color: #60a5fa; }
@@ -222,50 +275,42 @@
     .modal[data-agent="musa"] .modal-name { color: #34d399; }
     .modal[data-agent="musa"] .modal-avatar { border: 2px solid #34d39933; }
 
-    /* Back link */
-    .back-link {
-      display: inline-block;
-      margin: 1.5rem 0 0.5rem 1rem;
-      color: #555;
-      text-decoration: none;
-      font-size: 0.85rem;
-      max-width: 900px;
-    }
-
-    .back-link:hover { color: #888; }
-
     @media (max-width: 600px) {
       .modal { padding: 1.5rem; }
       .modal-avatar { width: 56px; height: 56px; }
       .modal-name { font-size: 1.2rem; }
-      .scene-container { padding: 1rem 0.5rem 0.5rem; }
+      .ship-container { padding: 0.5rem; }
+      .back-link { margin: 1rem 0 0 1rem; }
     }
   </style>
 </head>
 <body>
 
-  <div style="max-width: 900px; margin: 0 auto;">
+  <div class="starfield"></div>
+
+  <div class="content">
     <a href="../" class="back-link">← hyper.engineering</a>
+
+    <div class="ship-container">
+      <img src="ship.png" alt="hyper.engineering — AI Agents" class="ship-img">
+
+      <div class="hotspot hotspot-ada" onclick="openModal('ada')">
+        <span class="label">🧠 Ada</span>
+      </div>
+      <div class="hotspot hotspot-alyx" onclick="openModal('alyx')">
+        <span class="label">✨ Alyx</span>
+      </div>
+      <div class="hotspot hotspot-iris" onclick="openModal('iris')">
+        <span class="label">🌈 Iris</span>
+      </div>
+      <div class="hotspot hotspot-musa" onclick="openModal('musa')">
+        <span class="label">🧮 Musa</span>
+      </div>
+    </div>
+
+    <p class="subtitle">AI Agents</p>
+    <p class="hint">Click on an agent to learn more</p>
   </div>
-
-  <div class="scene-container">
-    <img src="scene.png" alt="hyper.engineering — AI Agents" class="scene-img">
-
-    <div class="hotspot hotspot-ada" onclick="openModal('ada')">
-      <span class="label">🧠 Ada</span>
-    </div>
-    <div class="hotspot hotspot-alyx" onclick="openModal('alyx')">
-      <span class="label">✨ Alyx</span>
-    </div>
-    <div class="hotspot hotspot-iris" onclick="openModal('iris')">
-      <span class="label">🌈 Iris</span>
-    </div>
-    <div class="hotspot hotspot-musa" onclick="openModal('musa')">
-      <span class="label">🧮 Musa</span>
-    </div>
-  </div>
-
-  <p class="hint">Click on an agent to learn more</p>
 
   <!-- Modal -->
   <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
