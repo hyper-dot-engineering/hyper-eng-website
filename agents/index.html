@@ -108,34 +108,34 @@
 
     /* Agent positions in the dome cockpit */
     .hotspot-ada {
-      left: 12%;
-      top: 18%;
+      left: 10%;
+      top: 25%;
       width: 25%;
-      height: 30%;
+      height: 28%;
     }
     .hotspot-ada .label { color: #60a5fa; }
 
     .hotspot-alyx {
       left: 28%;
-      top: 28%;
+      top: 38%;
       width: 32%;
-      height: 28%;
+      height: 24%;
     }
     .hotspot-alyx .label { color: #f59e0b; }
 
     .hotspot-iris {
-      left: 35%;
+      left: 33%;
       top: 8%;
-      width: 22%;
-      height: 20%;
+      width: 30%;
+      height: 26%;
     }
     .hotspot-iris .label { color: #a78bfa; }
 
     .hotspot-musa {
       left: 58%;
-      top: 18%;
-      width: 27%;
-      height: 30%;
+      top: 25%;
+      width: 28%;
+      height: 28%;
     }
     .hotspot-musa .label { color: #34d399; }
 
@@ -271,7 +271,10 @@
     <a href="../" class="back-link">← hyper.engineering</a>
 
     <div class="ship-container">
-      <img src="ship-v4.png" alt="hyper.engineering — AI Agents" class="ship-img">
+      <picture>
+        <source srcset="ship-v4.webp" type="image/webp">
+        <img src="ship-v4.png" alt="hyper.engineering — AI Agents" class="ship-img">
+      </picture>
 
       <div class="hotspot hotspot-ada" onclick="openModal('ada')">
         <span class="label">🧠 Ada</span>
