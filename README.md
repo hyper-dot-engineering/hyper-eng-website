@@ -5,16 +5,13 @@ Agentic Engineering & Consulting website.
 ## Structure
 
 ```
-├── index.html      # Main page
-├── styles.css      # Styles
+├── index.html      # Main page (styles + scripts inline, no build step)
+├── agents/         # /agents page
 └── assets/         # Images
     ├── main.png    # Logo (wide)
     ├── main-s.png  # Logo (square, favicon)
-    ├── gradient.png
-    ├── sameer.png
-    ├── sameer-2.png
-    ├── alyx-1.png
-    └── alyx-2.png
+    ├── logo-light-transparent.png
+    └── gradient.png
 ```
 
 ## Development

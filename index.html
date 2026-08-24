@@ -9,10 +9,12 @@
     <meta property="og:description" content="We build AI-powered solutions.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://hyper.engineering">
+    <meta property="og:image" content="https://hyper.engineering/assets/main-s.png">
+    <meta name="theme-color" content="#04263a">
     <link rel="icon" type="image/png" href="assets/main-s.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -21,139 +23,729 @@
         }
 
         body {
-            font-family: 'Baloo 2', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
-            color: #999;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            line-height: 1.6;
-            position: relative;
-            overflow: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: 
-                radial-gradient(ellipse at 30% 20%, rgba(59,130,246,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 80%, rgba(139,92,246,0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(59,130,246,0.05) 0%, transparent 70%);
-            pointer-events: none;
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
-        }
-
-        .container {
-            max-width: 600px;
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
-
-        .logo {
-            width: 300px;
-            height: auto;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-            filter: drop-shadow(0 0 40px rgba(59,130,246,0.2));
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.03em;
-        }
-
-        .dot {
-            color: #3b82f6;
-        }
-
-        .tagline {
-            font-size: 1.1rem;
-            color: #666;
-            margin-top: -0.25rem;
-            margin-bottom: 3rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-        }
-
-        .pitch {
-            font-size: 1.35rem;
-            color: #ccc;
-            margin-bottom: 2.5rem;
-            line-height: 1.5;
+            background: #010e1a;
+            color: #8fb5c8;
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         a {
-            color: #3b82f6;
+            color: #7dd3fc;
             text-decoration: none;
             transition: color 0.2s ease;
         }
 
         a:hover {
-            color: #fff;
+            color: #eaf6fc;
         }
 
-        .cta {
-            font-size: 1.1rem;
+        @keyframes glowPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
+        }
+
+        @keyframes bubbleUp {
+            0% { transform: translateY(0); opacity: 0; }
+            12% { opacity: 0.9; }
+            100% { transform: translateY(-560px); opacity: 0; }
+        }
+
+        @keyframes flipIn {
+            from { opacity: 0; transform: perspective(1200px) rotateX(10deg) translateY(20px); }
+            to { opacity: 1; transform: perspective(1200px) rotateX(0deg) translateY(0); }
+        }
+
+        .page {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #04263a 0%, #052c44 40%, #031b2e 80%, #010e1a 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 28px;
+        }
+
+        /* Ambient decoration: glow orbs, light rays, bubbles */
+        .orb, .ray, .bubble {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .orb {
+            border-radius: 50%;
+            filter: blur(24px);
+        }
+
+        .orb-1 {
+            top: -220px;
+            right: -160px;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(125,211,252,0.22) 0%, transparent 65%);
+            animation: glowPulse 10s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            bottom: -180px;
+            left: -160px;
+            width: 620px;
+            height: 620px;
+            background: radial-gradient(circle, rgba(56,140,190,0.25) 0%, transparent 65%);
+            animation: glowPulse 13s ease-in-out infinite;
+        }
+
+        .ray {
+            filter: blur(8px);
+        }
+
+        .ray-1 {
+            top: -140px;
+            left: 28%;
+            width: 420px;
+            height: 760px;
+            background: linear-gradient(180deg, rgba(125,211,252,0.14), transparent 75%);
+            transform: skewX(-12deg);
+        }
+
+        .ray-2 {
+            top: -100px;
+            left: 54%;
+            width: 260px;
+            height: 680px;
+            background: linear-gradient(180deg, rgba(125,211,252,0.09), transparent 70%);
+            transform: skewX(-16deg);
+        }
+
+        .bubble {
+            border-radius: 50%;
+            border: 1.5px solid rgba(185,230,250,0.6);
+        }
+
+        .bubble-1 { bottom: 8%;  left: 12%;  width: 14px; height: 14px; border-color: rgba(185,230,250,0.7);  background: rgba(185,230,250,0.1);  animation: bubbleUp 9s  linear infinite; }
+        .bubble-2 { bottom: 2%;  left: 22%;  width: 9px;  height: 9px;  border-color: rgba(185,230,250,0.55); animation: bubbleUp 7s  linear 2s infinite; }
+        .bubble-3 { bottom: 30%; left: 40%;  width: 12px; height: 12px; border-color: rgba(185,230,250,0.6);  background: rgba(185,230,250,0.08); animation: bubbleUp 10s linear 1s infinite; }
+        .bubble-4 { bottom: 12%; left: 58%;  width: 8px;  height: 8px;  border-color: rgba(185,230,250,0.5);  animation: bubbleUp 8s  linear 4s infinite; }
+        .bubble-5 { bottom: 40%; right: 16%; width: 13px; height: 13px; border-color: rgba(185,230,250,0.65); background: rgba(185,230,250,0.1);  animation: bubbleUp 11s linear 3s infinite; }
+        .bubble-6 { bottom: 5%;  right: 8%;  width: 10px; height: 10px; border-color: rgba(185,230,250,0.55); animation: bubbleUp 9s  linear 6s infinite; }
+
+        .wrap {
+            position: relative;
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        /* Flip cards: click flips front/back, hover lifts the frosted-glass chrome in */
+        .card {
+            cursor: pointer;
+        }
+
+        .card:focus-visible {
+            outline: 2px solid rgba(125,211,252,0.5);
+            outline-offset: 4px;
+            border-radius: 16px;
+        }
+
+        .card-inner {
+            display: grid;
+            transition: transform 0.75s cubic-bezier(0.35, 0.1, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateX(180deg);
+        }
+
+        .face {
+            grid-area: 1 / 1;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border: 1px solid transparent;
+            border-radius: 16px;
+            background: transparent;
+            transition: visibility 0s 0.36s, background 0.45s ease, border-color 0.45s ease,
+                        box-shadow 0.45s ease, backdrop-filter 0.45s ease, -webkit-backdrop-filter 0.45s ease;
+        }
+
+        .face-back {
+            transform: rotateX(-180deg);
+            visibility: hidden;
+        }
+
+        .card.flipped .face-front { visibility: hidden; }
+        .card.flipped .face-back { visibility: visible; }
+
+        .card:hover .face,
+        .card.flipped .face {
+            backdrop-filter: blur(9px);
+            -webkit-backdrop-filter: blur(9px);
+        }
+
+        .eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: #5d8299;
+            font-weight: 400;
+        }
+
+        .mono-note {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            color: #5d8299;
+        }
+
+        /* Hero */
+        .card-hero {
+            flex: 1 1 100%;
+            perspective: 1800px;
+            animation: flipIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+        }
+
+        .card-hero .face-front {
+            padding: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 44px;
+            flex-wrap: wrap;
+            box-shadow: 0 24px 70px rgba(0,0,0,0);
+        }
+
+        .card-hero:hover .face-front,
+        .card-hero.flipped .face-front {
+            background: rgba(255,255,255,0.045);
+            border-color: rgba(255,255,255,0.14);
+            box-shadow: 0 24px 70px rgba(0,0,0,0.3);
+        }
+
+        .card-hero:hover .face-back,
+        .card-hero.flipped .face-back {
+            background: rgba(125,211,252,0.06);
+            border-color: rgba(125,211,252,0.25);
+        }
+
+        .hero-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            min-width: 300px;
+        }
+
+        .hero-copy h1 {
+            font-size: clamp(44px, 6vw, 72px);
+            font-weight: 700;
+            letter-spacing: -0.045em;
+            line-height: 0.98;
+            color: #eaf6fc;
+        }
+
+        .hero-copy h1 .dot {
+            color: #7dd3fc;
+        }
+
+        .hero-pitch {
+            font-size: 21px;
+            color: #c3dcea;
+        }
+
+        .hero-logo {
+            width: min(270px, 40%);
+            height: auto;
+            filter: drop-shadow(0 24px 50px rgba(2,20,35,0.8)) drop-shadow(0 0 44px rgba(125,211,252,0.3));
+            animation: floatY 7s ease-in-out infinite;
+        }
+
+        .card-hero .face-back {
+            padding: 56px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 18px;
+        }
+
+        .about-text {
+            font-size: clamp(20px, 2.6vw, 28px);
+            line-height: 1.4;
+            color: #eaf6fc;
+            max-width: 760px;
+        }
+
+        .about-meta {
+            font-size: 15px;
+            color: #8fb5c8;
+        }
+
+        /* Projects */
+        .card-proj {
+            flex: 1 1 100%;
+            perspective: 1800px;
+            animation: flipIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+        }
+
+        .card-proj .face-front {
+            padding: 44px 52px;
+            box-shadow: 0 24px 70px rgba(0,0,0,0);
+        }
+
+        .card-proj:hover .face-front,
+        .card-proj.flipped .face-front {
+            background: rgba(125,211,252,0.07);
+            border-color: rgba(125,211,252,0.3);
+            box-shadow: 0 24px 70px rgba(0,0,0,0.3);
+        }
+
+        .card-proj:hover .face-back,
+        .card-proj.flipped .face-back {
+            background: rgba(125,211,252,0.1);
+            border-color: rgba(125,211,252,0.35);
+        }
+
+        .section-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 26px;
+        }
+
+        .proj-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .proj-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .proj-title-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .proj-title {
+            font-size: 38px;
+            font-weight: 700;
+            color: #eaf6fc;
+            letter-spacing: -0.03em;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #bfe9ff;
+            background: rgba(125,211,252,0.14);
+            border: 1px solid rgba(125,211,252,0.4);
+            border-radius: 999px;
+            padding: 8px 16px;
+            white-space: nowrap;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #7dd3fc;
+            animation: dotPulse 2.4s ease-in-out infinite;
+        }
+
+        .proj-tagline {
+            font-size: 18px;
+            color: #c3dcea;
+        }
+
+        .proj-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            color: #5d8299;
+        }
+
+        .stores {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .store {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            border-radius: 12px;
+            padding: 10px 20px 10px 16px;
+            white-space: nowrap;
+        }
+
+        .store-soon {
+            color: #4c7288;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.12);
+            cursor: not-allowed;
+        }
+
+        .store-live {
+            color: #eaf6fc;
+            background: rgba(125,211,252,0.18);
+            border: 1px solid rgba(125,211,252,0.45);
+            transition: background 0.2s ease;
+        }
+
+        .store-live:hover {
+            color: #eaf6fc;
+            background: rgba(125,211,252,0.28);
+        }
+
+        .store-label {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.25;
+        }
+
+        .store-label small {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8.5px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #3b5d70;
+        }
+
+        .store-live .store-label small {
+            color: #9fd7f5;
+        }
+
+        .store-label span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .card-proj .face-back {
+            padding: 44px 52px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .card-proj .face-back .section-head {
+            margin-bottom: 0;
+        }
+
+        .proj-details {
+            font-size: 17px;
+            line-height: 1.55;
+            color: #c3dcea;
+            max-width: 720px;
+        }
+
+        /* What we do */
+        .services {
+            flex: 1 1 100%;
+            padding: 10px 8px 2px;
+        }
+
+        .services-head {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .services-head .rule {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(125,211,252,0.2), transparent);
+        }
+
+        .services-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .service {
+            flex: 1 1 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .service h3 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #eaf6fc;
+        }
+
+        .service p {
+            font-size: 14.5px;
+            line-height: 1.55;
+            color: #8fb5c8;
+        }
+
+        /* Say hello */
+        .card-hello {
+            flex: 1 1 340px;
+            perspective: 1400px;
+            animation: flipIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+        }
+
+        .card-hello .card-inner {
+            height: 100%;
+        }
+
+        .card-hello .face {
+            padding: 36px 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .card-hello:hover .face-front,
+        .card-hello.flipped .face-front {
+            background: rgba(125,211,252,0.07);
+            border-color: rgba(125,211,252,0.22);
+        }
+
+        .card-hello:hover .face-back,
+        .card-hello.flipped .face-back {
+            background: rgba(125,211,252,0.11);
+            border-color: rgba(125,211,252,0.32);
+        }
+
+        .hello-mail {
+            font-size: clamp(17px, 2vw, 21px);
+            color: #eaf6fc;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .hello-note {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #c3dcea;
         }
 
         footer {
-            margin-top: 4rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #1a1a1a;
-            color: #444;
-            font-size: 0.875rem;
+            margin: 30px 20px 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.75rem;
+        footer p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            color: #4c7288;
+            text-align: center;
+        }
+
+        footer p.dim {
+            color: #3b5d70;
+        }
+
+        @media (max-width: 640px) {
+            .page {
+                padding: 16px;
             }
-            .tagline {
-                font-size: 0.9rem;
+            .card-hero .face-front,
+            .card-hero .face-back {
+                padding: 36px 26px;
             }
-            .logo {
-                width: 200px;
+            .card-hero .face-front {
+                gap: 28px;
             }
-            .pitch {
-                font-size: 1.1rem;
+            .hero-copy {
+                min-width: 0;
+            }
+            .hero-copy h1 {
+                font-size: clamp(34px, 11.5vw, 44px);
+            }
+            .card-proj .face-front,
+            .card-proj .face-back {
+                padding: 30px 24px;
+            }
+            .proj-title {
+                font-size: 30px;
+            }
+            .card-hello .face {
+                padding: 28px 26px;
+            }
+            footer {
+                margin: 24px 8px 4px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .bubble {
+                display: none;
+            }
+            .orb, .ray, .hero-logo, .badge-dot, .card {
+                animation: none;
+            }
+            .card-inner {
+                transition-duration: 0s;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="assets/logo-light-transparent.png" alt="Hyper" class="logo">
-        <h1>hyper<span class="dot">.</span>engineering</h1>
-        <p class="tagline">AI Native Engineering</p>
+    <div class="page">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="ray ray-1"></div>
+        <div class="ray ray-2"></div>
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+        <div class="bubble bubble-4"></div>
+        <div class="bubble bubble-5"></div>
+        <div class="bubble bubble-6"></div>
 
-        <p class="pitch">We build AI-powered solutions.</p>
+        <div class="wrap">
+            <div class="cards">
+                <div class="card card-hero" tabindex="0">
+                    <div class="card-inner">
+                        <div class="face face-front">
+                            <div class="hero-copy">
+                                <p class="eyebrow">AI Native Engineering</p>
+                                <h1>hyper<span class="dot">.</span><br>engineering</h1>
+                                <p class="hero-pitch">We build AI-powered solutions.</p>
+                            </div>
+                            <img src="assets/logo-light-transparent.png" alt="Hyper" class="hero-logo">
+                        </div>
+                        <div class="face face-back">
+                            <p class="eyebrow">About</p>
+                            <p class="about-text">Hyper Engineering LLC is an independent software studio building AI-native products and helping teams ship theirs. We design, engineer, and operate our own apps end to end, advocate for AI-native engineering workflows, and provide consulting that helps engineers and businesses ship AI-native products.</p>
+                            <p class="about-meta">Est. 2026 · <a href="mailto:hi@hyper.engineering">hi@hyper.engineering</a></p>
+                        </div>
+                    </div>
+                </div>
 
-        <p class="cta"><a href="mailto:hello@hyper.engineering">hello@hyper.engineering</a></p>
+                <div class="card card-proj" id="projects" tabindex="0">
+                    <div class="card-inner">
+                        <div class="face face-front">
+                            <div class="section-head">
+                                <h2 class="eyebrow">Projects</h2>
+                                <span class="mono-note">001 · click to flip</span>
+                            </div>
+                            <div class="proj-row">
+                                <div class="proj-info">
+                                    <div class="proj-title-row">
+                                        <span class="proj-title">Hypernotes</span>
+                                        <span class="badge"><span class="badge-dot"></span>Coming soon</span>
+                                    </div>
+                                    <span class="proj-tagline">AI-powered notes that organize themselves.</span>
+                                    <a href="https://hypernotes.so" target="_blank" rel="noopener" class="proj-link">hypernotes.so</a>
+                                </div>
+                                <div class="stores">
+                                    <span class="store store-soon" title="Available at launch">
+                                        <svg width="20" height="20" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
+                                        <span class="store-label"><small>Coming soon to the</small><span>App Store</span></span>
+                                    </span>
+                                    <span class="store store-soon" title="Available at launch">
+                                        <svg width="20" height="20" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
+                                        <span class="store-label"><small>Coming soon to the</small><span>Mac App Store</span></span>
+                                    </span>
+                                    <a href="https://hypernotes.so" target="_blank" rel="noopener" class="store store-live">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21M12 3C9.5 5.6 8.2 8.7 8.2 12s1.3 6.4 3.8 9"></path></svg>
+                                        <span class="store-label"><small>Available now on the</small><span>Web</span></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="face face-back">
+                            <div class="section-head">
+                                <h2 class="eyebrow">Hypernotes — details</h2>
+                                <span class="mono-note">Coming soon</span>
+                            </div>
+                            <p class="proj-details">AI-powered notes that organize themselves. Capture anything and Hypernotes files, links, and tags it for you. Connect it to ChatGPT and Claude over MCP so your assistant can read and write your notes. Built AI-native from day one, available on the web now, with iPhone and Mac apps launching soon.</p>
+                        </div>
+                    </div>
+                </div>
 
-        <footer>&copy; 2026 Hyper Engineering LLC</footer>
+                <div class="services">
+                    <div class="services-head">
+                        <h2 class="eyebrow">What we do</h2>
+                        <div class="rule"></div>
+                    </div>
+                    <div class="services-grid">
+                        <div class="service">
+                            <h3>Product engineering</h3>
+                            <p>We build and ship our own consumer and productivity apps, designed AI-native from the first line of code.</p>
+                        </div>
+                        <div class="service">
+                            <h3>Applied AI</h3>
+                            <p>LLM-powered features, agents, and automation, integrated into real products, not demos.</p>
+                        </div>
+                        <div class="service">
+                            <h3>Consulting</h3>
+                            <p>We help teams design and ship AI-powered software. <a href="mailto:hi@hyper.engineering">Get in touch</a>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-hello" tabindex="0">
+                    <div class="card-inner">
+                        <div class="face face-front">
+                            <span class="eyebrow">Say hello</span>
+                            <a href="mailto:hi@hyper.engineering" class="hello-mail">hi@hyper.engineering</a>
+                        </div>
+                        <div class="face face-back">
+                            <span class="eyebrow">We reply fast</span>
+                            <span class="hello-note">Consulting, partnerships, or just curious — <a href="mailto:hi@hyper.engineering">write to us</a>.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <p>&copy; 2026 Hyper Engineering LLC · Registered in California · hi@hyper.engineering</p>
+                <p class="dim">https://hyper.engineering</p>
+            </footer>
+        </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.card').forEach(function (card) {
+            function toggle() {
+                card.classList.toggle('flipped');
+            }
+            card.addEventListener('click', function (e) {
+                if (e.target.closest('a')) return;
+                toggle();
+            });
+            card.addEventListener('keydown', function (e) {
+                if (e.target.closest('a')) return;
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
